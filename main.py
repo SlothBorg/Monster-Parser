@@ -1,18 +1,22 @@
+from csv import reader
+
+
 def parse_file(file):
     with open(file) as monsters:
-        return monsters.read().splitlines()
+        csv_reader = reader(monsters)
+        return list(csv_reader)
 
 
-def print_monsters(monsters):
+def parse_monsters(monsters):
+    clean_monsters = []
     for index, value in enumerate(monsters):
-        if index % 4 == 0:
-            print(parse_values(index, monsters))
-
-
-def parse_values(index, array):
-    return array[index] + '\t' + array[index+1] + '\t' + array[index+2] + '\t' + array[index+3]
+        # print(value[1])
+        if value[1] not in clean_monsters:
+            clean_monsters.append(value[1])
+    return clean_monsters
 
 
 if __name__ == '__main__':
-    monsters = parse_file('monsters.txt')
-    print_monsters(monsters)
+    monsters = parse_file('Data/D&D Monsters.csv')
+    clean_monsters = parse_monsters(monsters)
+    print(clean_monsters)
